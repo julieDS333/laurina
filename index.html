@@ -173,7 +173,7 @@
   /* METRO GAME */
   #game-arena {
     position:relative; width:min(660px,95vw); height:340px;
-    background:rgba(20,45,18,1); border:3px solid var(--orange);
+    background:rgba(20,45,18,0,7); border:3px solid var(--orange);
     box-shadow:4px 4px 0 var(--orange-dark);
     border-radius:16px; overflow:hidden; margin:0.8rem auto; cursor:crosshair;
   }
@@ -294,20 +294,20 @@ const flags=[
   {
     img:'./sao_tome.png', answer:'São Tomé & Príncipe',
     options:['São Tomé & Príncipe','Senegal','Cameroon','Togo'],
-    right:'🌟 CORRECT! São Tomé & Príncipe — a tiny island nation off West Africa that 99% of people have never heard of. You\'re already smarter than most.',
-    wrong:['❌ Nope. Did you just guess? Be honest.','❌ Think smaller. WAY smaller island.','❌ Not even close. It\'s São Tomé & Príncipe.']
+    right:'CORRECT! A tiny island nation off West Africa that 99% of people have never heard of. You really love it!',
+    wrong:['Nope. Did you just guess? Be honest.','Think smaller. WAY smaller island.',' Not even close. It\'s São Tomé & Príncipe.']
   },
   {
     img:'./montserrat.png', answer:'Montserrat',
     options:['Montserrat','Cayman Islands','British Virgin Islands','Bermuda'],
-    right:'🌟 YES! Montserrat! A tiny British Caribbean island with a woman holding a harp on it. Very dramatic energy.',
-    wrong:['❌ Nah. There\'s literally a woman with a harp on it.','❌ WRONG. It\'s Montserrat. It also has an active volcano.','❌ Not it. Look at the little shield next time!']
+    right:'YES! Very easy one, a bit of a dramatic energy.',
+    wrong:[' Nah. There\'s literally a woman with a harp on it.','WRONG. It\'s Montserrat. It also has an active volcano.',' Not it. Look at the little shield next time!']
   },
   {
     img:'./aceh.png', answer:'Aceh, Indonesia',
     options:['Aceh, Indonesia','Saudi Arabia','Malaysia','Pakistan'],
-    right:'🌟 ACEH! An Indonesian province with full pirate energy on its flag. You\'re basically a geography professor now.',
-    wrong:['❌ No! It\'s Aceh — an Indonesian province. Very on theme.','❌ Incorrect. Aceh, Indonesia. File that away.','❌ Nope! Aceh, Indonesia. So obscure even Indonesians forget it.']
+    right:'ACEH! Time to listen to national anthems i guess',
+    wrong:[' No! It\'s Aceh — an Indonesian province. Very on theme.','Incorrect. Aceh, Indonesia. File that away.','Nope! Aceh, Indonesia. So obscure even Indonesians forget it.']
   }
 ];
 let currentFlag=0,wrongCounts=[0,0,0];
@@ -349,9 +349,9 @@ function selectOption(opt,btn){
 
 // ── STOP THE UHAUL ────────────────────────────────────────────────
 const QUESTIONS=[
-  { q:'🧮 Quick maths. What is 8 × 6?', answers:['48'], right:'✅ 48! The truck brakes a little... 🛑', wrong:'❌ WRONG. The truck is speeding up. THINK.' },
-  { q:"👨 What's the name of Julie's dad?", answers:['manuel'], right:'✅ Manuel! It\'s slowing down... 🛑🛑', wrong:'❌ Nope! The truck does not care about your wrong answers.' },
-  { q:'🇵🇹 Does Julie speak Portuguese? (yes/no)', answers:['yes','oui','sim'], right:'✅ YES obviously! FULL STOP. You saved us. 🛑🛑🛑', wrong:'❌ The answer is YES. Obviously. Now the truck is basically on your face.' }
+  { q:'Quick maths. What is 8 × 6?', answers:['48'], right:' 48! The truck brakes a little... ', wrong:'❌ WRONG. The truck is speeding up. THINK.' },
+  { q:"What's the name of Julie's dad?", answers:['manuel'], right:'Manuel! It\'s slowing down... ', wrong:'❌ Nope! The truck does not care about your wrong answers.' },
+  { q:'Does Julie speak Portuguese? (yes/no)', answers:['yes','oui','sim'], right:' YES obviously! FULL STOP. You saved us.', wrong:'❌ The answer is YES. Obviously. Now the truck is basically on your face.' }
 ];
 let uhaulInterval,uhaulTimeLeft,currentQ,uhaulRunning;
 const TOTAL_TIME=20;
@@ -484,7 +484,7 @@ function scheduleMetro(arena){
   setTimeout(()=>{
     if(!gameRunning) return;
     const metro=makeItem(ITEMS[5]); arena.appendChild(metro); floatItem(metro,arena);
-    setTimeout(()=>{ if(metro.parentNode) metro.remove(); scheduleMetro(arena); },500+Math.random()*500);
+    setTimeout(()=>{ if(metro.parentNode) metro.remove(); scheduleMetro(arena); },200+Math.random()*500);
   },800+Math.random()*1200);
 }
 function catchMetro(el){
