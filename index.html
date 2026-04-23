@@ -186,7 +186,7 @@
   .egg-img { width:130px; height:auto; animation:bounce 1s ease infinite alternate; display:block; margin:0 auto 1rem; }
   @keyframes bounce { from{transform:translateY(0) rotate(-3deg);} to{transform:translateY(-14px) rotate(3deg);} }
   .password-reveal {
-    background:rgba(0,0,0,0.45); border:3px solid var(--orange);
+    background:rgba(0,0,0,1); border:3px solid var(--orange);
     box-shadow:5px 5px 0 var(--orange-dark);
     border-radius:16px; padding:1.8rem 2.5rem; margin:1.2rem auto; max-width:460px;
   }
@@ -229,7 +229,7 @@
 <!-- SCREEN 2: STOP THE UHAUL -->
 <div class="screen" id="screen-2">
   <h2>Stop the U-Haul</h2>
-  <p style="opacity:0.7;font-size:0.9rem;margin-bottom:0.4rem;">It's getting closer. Answer all 3 questions in 20 seconds or it CRASHES. Wrong answers cost you time. Go.</p>
+  <p style="opacity:0.7;font-size:0.9rem;margin-bottom:0.4rem;"> Answer all 3 questions in 20 seconds or it CRASHES. Wrong answers cost you time. Go.</p>
   <div class="uhaul-timer-bar"><div class="uhaul-timer-fill" id="uhaulTimerFill"></div></div>
   <div class="uhaul-countdown" id="uhaulCountdown">20</div>
   <div id="uhaul-arena">
@@ -245,14 +245,14 @@
     <div class="feedback" id="uhaulFeedback"></div>
   </div>
   <div id="uhaulRetry" style="display:none;">
-    <button class="btn red" onclick="initUhaul()">TRY AGAIN 🚛</button>
+    <button class="btn red" onclick="initUhaul()">TRY AGAIN </button>
   </div>
 </div>
 
 <!-- SCREEN 3: METRO GAME -->
 <div class="screen" id="screen-3">
   <h2>Catch That Card</h2>
-  <p style="opacity:0.7;margin-bottom:0.2rem;">A metro card appears and disappears randomly. Click it 3 times fast. 👀</p>
+  <p style="opacity:0.7;margin-bottom:0.2rem;">Catch the metro card.</p>
   <div class="game-score-bar">Score: <span id="scoreDisplay">0</span> / 3</div>
   <div id="game-arena"><div class="miss-flash" id="missFlash"></div></div>
   <div class="feedback" id="gameFeedback" style="margin-top:0.5rem;"></div>
@@ -268,7 +268,6 @@
     <div class="password-label">Your secret password is</div>
     <div class="password-word">MY MOM'S LAST NAME</div>
   </div>
-  <p style="opacity:0.5;font-size:0.85rem;margin-top:1rem;">Don't you dare screenshot this and forget the word. 🙃</p>
 </div>
 
 <script>
