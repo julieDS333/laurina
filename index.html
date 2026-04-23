@@ -3,163 +3,201 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laura's Quest 🏴‍☠️</title>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<title>Laura's Quest</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0d0d0d;
+    --green: #3a6b35;
+    --green-dark: #2a4f26;
+    --orange: #f26522;
+    --orange-dark: #c44d0f;
     --cream: #f5f0e8;
-    --red: #e63946;
-    --gold: #f4a916;
-    --dark-gold: #c8860a;
+    --white: #ffffff;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: url('./bgcubby.png') center/cover fixed; color: var(--cream);
-    font-family: 'Nunito', sans-serif;
-    min-height: 100vh; overflow-x: hidden;
-  }
-  .stars {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background: rgba(0,0,0,0.55);
-  }
-  .screen {
-    display: none; position: relative; z-index: 1;
-    min-height: 100vh; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 2rem 1.5rem; text-align: center;
-  }
-  .screen.active { display: flex; animation: fadeIn 0.5s ease; }
-  @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  * { margin:0; padding:0; box-sizing:border-box; }
 
-  .progress-bar { position:fixed; top:0; left:0; right:0; z-index:100; height:6px; background:rgba(255,255,255,0.1); display:none; }
+  body {
+    background:url('./bgcubby.png') center/cover fixed;
+    color:var(--cream);
+    font-family:'Nunito',sans-serif;
+    min-height:100vh; overflow-x:hidden;
+  }
+
+  .green-overlay {
+    position:fixed; inset:0; z-index:0;
+    background:rgba(28,52,22,0.9);
+    display:none;
+  }
+  .green-overlay::after {
+    content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);
+    pointer-events:none;
+  }
+  .green-overlay.active { display:block; }
+
+  .screen {
+    display:none; position:relative; z-index:1;
+    min-height:100vh; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:2rem 1.5rem; text-align:center;
+  }
+  .screen.active { display:flex; animation:fadeIn 0.5s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .progress-bar { position:fixed; top:0; left:0; right:0; z-index:100; height:7px; background:rgba(255,255,255,0.1); display:none; }
   .progress-bar.visible { display:block; }
-  .progress-fill { height:100%; background:linear-gradient(90deg, var(--gold), var(--red)); transition:width 0.5s ease; }
-  .stage-indicator { position:fixed; top:16px; right:20px; z-index:100; font-family:'Bangers',cursive; font-size:18px; color:var(--gold); letter-spacing:1px; display:none; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--orange),#ffb347); transition:width 0.5s ease; }
+  .stage-indicator { position:fixed; top:14px; right:18px; z-index:100; font-family:'Fredoka One',cursive; font-size:17px; color:var(--orange); letter-spacing:1px; display:none; }
   .stage-indicator.visible { display:block; }
 
-  h1 { font-family:'Bangers',cursive; font-size:clamp(3rem,10vw,6rem); letter-spacing:4px; line-height:1; color:var(--gold); }
-  h2 { font-family:'Bangers',cursive; font-size:clamp(1.8rem,5vw,3rem); letter-spacing:3px; color:var(--gold); text-shadow:3px 3px 0 var(--dark-gold); margin-bottom:0.5rem; }
-  p { font-size:clamp(0.95rem,2.5vw,1.15rem); line-height:1.7; color:var(--cream); max-width:600px; }
-  .hashtag { color:var(--red); font-weight:900; }
+  h1 {
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(4rem,12vw,7rem);
+    letter-spacing:2px; line-height:0.95;
+    color:var(--white);
+    text-shadow:3px 3px 0 var(--orange), 6px 6px 0 var(--orange-dark);
+  }
+  h2 {
+    font-family:'Fredoka One',cursive;
+    font-size:clamp(1.8rem,5vw,2.8rem);
+    letter-spacing:1px; color:var(--orange);
+    text-shadow:2px 2px 0 var(--orange-dark);
+    margin-bottom:0.5rem;
+  }
+  p { font-size:clamp(0.95rem,2.5vw,1.1rem); line-height:1.7; color:var(--cream); max-width:600px; }
+  .hashtag { color:var(--orange); font-weight:900; }
 
   .btn {
-    display:inline-block; margin-top:1.5rem; padding:0.9rem 2.2rem;
-    font-family:'Bangers',cursive; font-size:1.5rem; letter-spacing:3px;
-    color:var(--black); background:var(--gold); border:none; border-radius:4px;
-    cursor:pointer; box-shadow:4px 4px 0 var(--dark-gold), 8px 8px 0 rgba(0,0,0,0.4);
+    display:inline-block; margin-top:1.5rem; padding:0.9rem 2.4rem;
+    font-family:'Fredoka One',cursive; font-size:1.4rem; letter-spacing:1px;
+    color:var(--white); background:var(--orange);
+    border:none; border-radius:50px; cursor:pointer;
+    box-shadow:4px 4px 0 var(--orange-dark), 7px 7px 0 rgba(0,0,0,0.3);
     transition:transform 0.1s, box-shadow 0.1s; text-transform:uppercase;
   }
-  .btn:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--dark-gold), 10px 10px 0 rgba(0,0,0,0.4); }
+  .btn:hover { transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--orange-dark), 10px 10px 0 rgba(0,0,0,0.3); }
   .btn:active { transform:translate(4px,4px); box-shadow:none; }
-  .btn.red { background:var(--red); box-shadow:4px 4px 0 #a01010, 8px 8px 0 rgba(0,0,0,0.4); color:white; }
+  .btn.red { background:#c0392b; box-shadow:4px 4px 0 #7b241c, 7px 7px 0 rgba(0,0,0,0.3); }
 
-  .rope { width:100%; height:12px; background:repeating-linear-gradient(90deg,#8B6914 0px,#c8a44a 4px,#8B6914 8px); border-radius:6px; margin:1.5rem 0; opacity:0.6; max-width:500px; }
-  .jolly-deco { width:80px; height:53px; background:url('./jolly_roger.png') center/contain no-repeat; display:inline-block; margin:0 1rem; filter:drop-shadow(0 0 8px rgba(255,200,0,0.3)); }
+  .retro-line {
+    width:min(400px,90vw); height:3px; margin:1.2rem auto;
+    background:repeating-linear-gradient(90deg,var(--orange) 0px,var(--orange) 12px,transparent 12px,transparent 18px);
+    opacity:0.6;
+  }
+  .jolly-deco { width:70px; height:47px; background:url('./jolly_roger.png') center/contain no-repeat; display:inline-block; margin:0 0.8rem; filter:drop-shadow(0 0 6px rgba(242,101,34,0.5)); }
 
   .feedback { min-height:44px; font-size:1rem; font-weight:700; margin:0.3rem 0; padding:0.3rem 0.5rem; }
-  .feedback.good { color:#86efac; }
-  .feedback.bad { color:#fca5a5; }
+  .feedback.good { color:#7defa1; }
+  .feedback.bad { color:#ff9a8b; }
 
   /* WELCOME */
   #screen-0 .intro-text {
-    max-width:650px; background:rgba(0,0,0,0.5);
-    border:1px solid rgba(244,169,22,0.3); border-radius:12px;
-    padding:1.8rem; margin:1.2rem auto; text-align:left;
+    max-width:640px; text-align:left;
+    background:rgba(0,0,0,0.45);
+    border:2px solid rgba(242,101,34,0.35);
+    border-radius:16px; padding:1.8rem;
+    margin:1rem auto;
   }
-  #screen-0 .intro-text p { margin-bottom:0.9rem; }
+  #screen-0 .intro-text p { margin-bottom:0.85rem; }
   #screen-0 .intro-text p:last-child { margin-bottom:0; }
 
   /* FLAG QUIZ */
-  .flag-display { width:min(320px,88vw); border-radius:8px; border:3px solid var(--gold); box-shadow:0 0 30px rgba(244,169,22,0.4); margin:1.2rem auto; display:block; }
-  .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:480px; width:100%; margin:0.8rem auto; }
-  .quiz-opt { padding:0.8rem 1rem; background:rgba(0,0,0,0.5); border:1.5px solid rgba(255,255,255,0.2); border-radius:8px; color:var(--cream); font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
-  .quiz-opt:hover { background:rgba(244,169,22,0.15); border-color:var(--gold); }
-  .quiz-opt.correct { background:rgba(34,197,94,0.25); border-color:#22c55e; color:#86efac; }
-  .quiz-opt.wrong { background:rgba(239,68,68,0.25); border-color:#ef4444; color:#fca5a5; }
+  .flag-display { width:min(300px,85vw); border-radius:10px; border:3px solid var(--orange); box-shadow:4px 4px 0 var(--orange-dark); margin:1rem auto; display:block; }
+  .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:460px; width:100%; margin:0.8rem auto; }
+  .quiz-opt {
+    padding:0.8rem 1rem;
+    background:rgba(20,45,18,0.8); border:2px solid rgba(242,101,34,0.3);
+    border-radius:50px; color:var(--cream);
+    font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:700;
+    cursor:pointer; transition:all 0.2s;
+  }
+  .quiz-opt:hover { background:rgba(242,101,34,0.2); border-color:var(--orange); }
+  .quiz-opt.correct { background:rgba(34,197,94,0.2); border-color:#22c55e; color:#86efac; }
+  .quiz-opt.wrong { background:rgba(220,50,50,0.2); border-color:#ef4444; color:#fca5a5; }
   .quiz-opt:disabled { cursor:default; }
-  .quiz-progress { font-family:'Bangers',cursive; font-size:1.3rem; color:rgba(244,169,22,0.7); letter-spacing:2px; margin-bottom:0.8rem; }
+  .quiz-progress { font-family:'Fredoka One',cursive; font-size:1.2rem; color:rgba(242,101,34,0.8); letter-spacing:1px; margin-bottom:0.6rem; }
 
   /* UHAUL */
   #screen-2 { justify-content:center; gap:0.5rem; padding-top:1rem; padding-bottom:1rem; }
-
   #uhaul-arena {
-    position:relative; width:min(660px,95vw); height:200px;
+    position:relative; width:min(640px,95vw); height:190px;
     overflow:hidden; flex-shrink:0;
-    background:linear-gradient(180deg,#1a3a5c 0%,#2d6a9f 55%,#7a6a5a 55%,#5a4a3a 100%);
-    border-radius:12px; border:2px solid rgba(244,169,22,0.3);
+    background:linear-gradient(180deg,#87CEEB 0%,#b0d8f0 50%,#7a6a5a 50%,#5a4a3a 100%);
+    border-radius:14px; border:3px solid var(--orange);
+    box-shadow:4px 4px 0 var(--orange-dark);
   }
   #uhaul-arena::after {
     content:''; position:absolute; bottom:22%; left:0; right:0; height:4px;
-    background:repeating-linear-gradient(90deg,rgba(255,255,200,0.6) 0px,rgba(255,255,200,0.6) 28px,transparent 28px,transparent 56px);
+    background:repeating-linear-gradient(90deg,rgba(255,255,200,0.7) 0px,rgba(255,255,200,0.7) 24px,transparent 24px,transparent 48px);
   }
   #uhaul-truck {
-    position:absolute; bottom:20%; left:50%;
+    position:absolute; bottom:18%; left:50%;
     transform:translateX(-50%);
     width:2.5rem; height:auto;
     transition:width 0.08s linear;
     transform-origin:bottom center;
-    filter:drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,0.5));
   }
-  .uhaul-timer-bar { width:min(660px,95vw); height:8px; background:rgba(255,255,255,0.1); border-radius:5px; flex-shrink:0; overflow:hidden; }
-  .uhaul-timer-fill { height:100%; width:100%; background:linear-gradient(90deg,#22c55e,var(--gold),var(--red)); transition:width 0.1s linear; border-radius:5px; }
-  .uhaul-countdown { font-family:'Bangers',cursive; font-size:1.8rem; color:var(--gold); letter-spacing:2px; flex-shrink:0; }
-  .uhaul-question-box {
-    background:rgba(0,0,0,0.5); border:2px solid rgba(244,169,22,0.35);
-    border-radius:12px; padding:1rem 1.3rem;
-    width:min(660px,95vw); flex-shrink:0;
-  }
+  .uhaul-timer-bar { width:min(640px,95vw); height:8px; background:rgba(255,255,255,0.1); border-radius:50px; flex-shrink:0; overflow:hidden; }
+  .uhaul-timer-fill { height:100%; width:100%; background:linear-gradient(90deg,#7defa1,var(--orange),#e74c3c); transition:width 0.1s linear; border-radius:50px; }
+  .uhaul-countdown { font-family:'Fredoka One',cursive; font-size:2rem; color:var(--orange); letter-spacing:1px; flex-shrink:0; }
+  .uhaul-question-box { border-radius:14px; padding:1rem 1.3rem; width:min(640px,95vw); flex-shrink:0; }
   .uhaul-q-text { font-size:clamp(1rem,2.8vw,1.15rem); font-weight:700; color:var(--cream); margin-bottom:0.7rem; }
   .uhaul-input-row { display:flex; gap:8px; }
   .uhaul-input {
-    flex:1; padding:0.7rem 1rem;
-    background:rgba(255,255,255,0.08); border:2px solid rgba(255,255,255,0.2);
-    border-radius:8px; color:var(--cream);
+    flex:1; padding:0.75rem 1.1rem;
+    background:rgba(20,45,18,0.8); border:2px solid rgba(242,101,34,0.4);
+    border-radius:50px; color:var(--cream);
     font-family:'Nunito',sans-serif; font-size:1rem; font-weight:700;
     outline:none; transition:border-color 0.2s;
   }
-  .uhaul-input:focus { border-color:var(--gold); }
+  .uhaul-input:focus { border-color:var(--orange); }
   .uhaul-input::placeholder { color:rgba(255,255,255,0.3); }
   .uhaul-submit {
-    padding:0.7rem 1.3rem; font-family:'Bangers',cursive; font-size:1.2rem; letter-spacing:2px;
-    color:var(--black); background:var(--gold); border:none; border-radius:8px; cursor:pointer;
-    box-shadow:3px 3px 0 var(--dark-gold); transition:transform 0.1s; white-space:nowrap;
+    padding:0.75rem 1.4rem; font-family:'Fredoka One',cursive; font-size:1.1rem;
+    color:var(--white); background:var(--orange); border:none; border-radius:50px; cursor:pointer;
+    box-shadow:3px 3px 0 var(--orange-dark); transition:transform 0.1s; white-space:nowrap;
   }
   .uhaul-submit:hover { transform:translate(-1px,-1px); }
   .uhaul-submit:active { transform:translate(2px,2px); box-shadow:none; }
   #crash-overlay {
-    position:absolute; inset:0; background:rgba(230,57,70,0);
+    position:absolute; inset:0; background:rgba(220,50,50,0);
     display:flex; align-items:center; justify-content:center; flex-direction:column;
-    border-radius:10px; pointer-events:none; opacity:0; transition:opacity 0.3s;
+    border-radius:12px; pointer-events:none; opacity:0; transition:opacity 0.3s;
   }
-  #crash-overlay.active { opacity:1; pointer-events:all; background:rgba(230,57,70,0.18); }
-  .crash-text { font-family:'Bangers',cursive; font-size:3.5rem; color:var(--red); text-shadow:3px 3px 0 #500; }
+  #crash-overlay.active { opacity:1; pointer-events:all; background:rgba(220,50,50,0.2); }
+  .crash-text { font-family:'Fredoka One',cursive; font-size:3rem; color:#e74c3c; text-shadow:3px 3px 0 #7b241c; }
   @keyframes truckShake { 0%,100%{transform:translateX(-50%)} 25%{transform:translateX(calc(-50% - 12px))} 75%{transform:translateX(calc(-50% + 12px))} }
   .truck-shake { animation:truckShake 0.35s ease; }
 
   /* METRO GAME */
   #game-arena {
-    position:relative; width:min(680px,95vw); height:360px;
-    background:rgba(0,0,0,0.35); border:2px solid rgba(244,169,22,0.3);
+    position:relative; width:min(660px,95vw); height:340px;
+    background:rgba(20,45,18,0.6); border:3px solid var(--orange);
+    box-shadow:4px 4px 0 var(--orange-dark);
     border-radius:16px; overflow:hidden; margin:0.8rem auto; cursor:crosshair;
   }
   .flying-item { position:absolute; width:65px; height:65px; object-fit:contain; border-radius:8px; cursor:pointer; user-select:none; filter:drop-shadow(2px 2px 4px rgba(0,0,0,0.5)); transition:transform 0.1s; }
   .flying-item:hover { transform:scale(1.12); }
-  .miss-flash { position:absolute; inset:0; background:rgba(239,68,68,0.15); pointer-events:none; opacity:0; transition:opacity 0.3s; border-radius:14px; }
-  .game-score-bar { font-family:'Bangers',cursive; font-size:1.6rem; color:var(--gold); letter-spacing:2px; margin:0.4rem 0; }
+  .miss-flash { position:absolute; inset:0; background:rgba(220,50,50,0.15); pointer-events:none; opacity:0; transition:opacity 0.3s; border-radius:14px; }
+  .game-score-bar { font-family:'Fredoka One',cursive; font-size:1.6rem; color:var(--orange); letter-spacing:1px; margin:0.4rem 0; }
 
   /* PASSWORD */
-  .egg-img { width:140px; height:auto; animation:bounce 1s ease infinite alternate; display:block; margin:0 auto 1rem; }
+  .egg-img { width:130px; height:auto; animation:bounce 1s ease infinite alternate; display:block; margin:0 auto 1rem; }
   @keyframes bounce { from{transform:translateY(0) rotate(-3deg);} to{transform:translateY(-14px) rotate(3deg);} }
-  .password-reveal { background:rgba(0,0,0,0.5); border:2px solid var(--gold); border-radius:16px; padding:1.8rem 2.5rem; margin:1.2rem auto; max-width:480px; }
-  .password-label { font-size:0.8rem; letter-spacing:3px; text-transform:uppercase; color:rgba(244,169,22,0.6); margin-bottom:0.4rem; font-weight:700; }
-  .password-word { font-family:'Bangers',cursive; font-size:clamp(2.8rem,9vw,4.5rem); letter-spacing:8px; color:var(--gold); text-shadow:0 0 30px rgba(244,169,22,0.6), 4px 4px 0 var(--dark-gold); }
+  .password-reveal {
+    background:rgba(0,0,0,0.45); border:3px solid var(--orange);
+    box-shadow:5px 5px 0 var(--orange-dark);
+    border-radius:16px; padding:1.8rem 2.5rem; margin:1.2rem auto; max-width:460px;
+  }
+  .password-label { font-size:0.75rem; letter-spacing:4px; text-transform:uppercase; color:rgba(242,101,34,0.7); margin-bottom:0.4rem; font-weight:700; }
+  .password-word { font-family:'Fredoka One',cursive; font-size:clamp(2.8rem,9vw,4.5rem); letter-spacing:6px; color:var(--orange); text-shadow:3px 3px 0 var(--orange-dark); }
   .confetti-piece { position:absolute; pointer-events:none; border-radius:2px; animation:confettiFall linear forwards; }
   @keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0} }
 </style>
 </head>
 <body>
-<div class="stars"></div>
+<div class="green-overlay" id="greenOverlay"></div>
 <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
 <div class="stage-indicator" id="stageIndicator">STAGE <span id="stageNum">1</span> / 4</div>
 
@@ -167,13 +205,13 @@
 <div class="screen active" id="screen-0">
   <div><span class="jolly-deco"></span><span class="jolly-deco"></span></div>
   <h1>Laura's<br>Quest</h1>
-  <div class="rope"></div>
+  <div class="retro-line"></div>
   <div class="intro-text">
     <p>Okay Laura, don't panic — this is a website. It is something youngsters use on the internet.</p>
     <p>You're doing great already. 👏</p>
     <p>I made you a little adventure — I could've just texted you a meme but apparently I like you too much for that <span class="hashtag">#lesbian</span> <span class="hashtag">#Uhaul</span></p>
     <p>At the end there's a password. Say it to me in person and something good happens. No spoilers. Just you, your brain, and whatever chaos lives in there.</p>
-    <p style="text-align:center;font-size:1.3rem;margin-top:0.8rem;">Think you can handle it, pirate? 🏴‍☠️</p>
+    <p style="text-align:center;font-size:1.2rem;margin-top:0.8rem;">Think you can handle it, pirate? 🏴‍☠️</p>
   </div>
   <button class="btn" onclick="goToScreen(1)">I WAS BORN READY ☠️</button>
 </div>
@@ -182,7 +220,7 @@
 <div class="screen" id="screen-1">
   <h2>Flag Interrogation</h2>
   <p style="margin-bottom:0.2rem;">let's check if you are Laura 👀</p>
-  <p style="opacity:0.5;font-size:0.85rem;margin-bottom:0.3rem;">3 flags. Probably never seen them. No shame.</p>
+  <p style="opacity:0.5;font-size:0.85rem;margin-bottom:0.4rem;">3 flags. Probably never seen them. No shame.</p>
   <div class="quiz-progress" id="quizProgress">FLAG 1 / 3</div>
   <img id="flagImg" class="flag-display" src="" alt="mystery flag"/>
   <div class="feedback" id="quizFeedback"></div>
@@ -197,9 +235,7 @@
   <div class="uhaul-countdown" id="uhaulCountdown">20</div>
   <div id="uhaul-arena">
     <img id="uhaul-truck" src="./uhaul.png" alt="uhaul"/>
-    <div id="crash-overlay">
-      <div class="crash-text">💥 CRASH 💥</div>
-    </div>
+    <div id="crash-overlay"><div class="crash-text">💥 CRASH 💥</div></div>
   </div>
   <div class="uhaul-question-box" id="uhaulQuestionBox">
     <div class="uhaul-q-text" id="uhaulQText"></div>
@@ -238,54 +274,53 @@
 
 <script>
 function goToScreen(n) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + n).classList.add('active');
-  document.getElementById('progressFill').style.width = (n / 4 * 100) + '%';
-  document.getElementById('stageNum').textContent = n;
-  if (n > 0) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+n).classList.add('active');
+  document.getElementById('progressFill').style.width=(n/4*100)+'%';
+  document.getElementById('stageNum').textContent=n;
+  const overlay=document.getElementById('greenOverlay');
+  overlay.classList.toggle('active', n>0 && n<4);
+  if(n>0){
     document.getElementById('progressBar').classList.add('visible');
     document.getElementById('stageIndicator').classList.add('visible');
   }
-  if (n === 1) initQuiz();
-  if (n === 2) initUhaul();
-  if (n === 3) initGame();
-  if (n === 4) launchConfetti();
+  if(n===1) initQuiz();
+  if(n===2) initUhaul();
+  if(n===3) initGame();
+  if(n===4) launchConfetti();
 }
 
 // ── FLAG QUIZ ─────────────────────────────────────────────────────
-const flags = [
+const flags=[
   {
-    img: './sao_tome.png', answer:'São Tomé & Príncipe',
+    img:'./sao_tome.png', answer:'São Tomé & Príncipe',
     options:['São Tomé & Príncipe','Senegal','Cameroon','Togo'],
     right:'🌟 CORRECT! São Tomé & Príncipe — a tiny island nation off West Africa that 99% of people have never heard of. You\'re already smarter than most.',
     wrong:['❌ Nope. Did you just guess? Be honest.','❌ Think smaller. WAY smaller island.','❌ Not even close. It\'s São Tomé & Príncipe.']
   },
   {
-    img: './montserrat.png', answer:'Montserrat',
+    img:'./montserrat.png', answer:'Montserrat',
     options:['Montserrat','Cayman Islands','British Virgin Islands','Bermuda'],
     right:'🌟 YES! Montserrat! A tiny British Caribbean island with a woman holding a harp on it. Very dramatic energy.',
     wrong:['❌ Nah. There\'s literally a woman with a harp on it.','❌ WRONG. It\'s Montserrat. It also has an active volcano.','❌ Not it. Look at the little shield next time!']
   },
   {
-    img: './aceh.png', answer:'Aceh, Indonesia',
+    img:'./aceh.png', answer:'Aceh, Indonesia',
     options:['Aceh, Indonesia','Saudi Arabia','Malaysia','Pakistan'],
     right:'🌟 ACEH! An Indonesian province with full pirate energy on its flag. You\'re basically a geography professor now.',
     wrong:['❌ No! It\'s Aceh — an Indonesian province. Very on theme.','❌ Incorrect. Aceh, Indonesia. File that away.','❌ Nope! Aceh, Indonesia. So obscure even Indonesians forget it.']
   }
 ];
-let currentFlag = 0, wrongCounts = [0,0,0];
-
-function initQuiz() { currentFlag=0; wrongCounts=[0,0,0]; renderFlag(); }
-
-function renderFlag() {
-  const f = flags[currentFlag];
-  document.getElementById('quizProgress').textContent = `FLAG ${currentFlag+1} / 3`;
-  const img = document.getElementById('flagImg');
-  img.src = f.img;
-  img.style.opacity = '1';
+let currentFlag=0,wrongCounts=[0,0,0];
+function initQuiz(){ currentFlag=0; wrongCounts=[0,0,0]; renderFlag(); }
+function renderFlag(){
+  const f=flags[currentFlag];
+  document.getElementById('quizProgress').textContent=`FLAG ${currentFlag+1} / 3`;
+  const img=document.getElementById('flagImg');
+  img.src=f.img; img.style.opacity='1';
   document.getElementById('quizFeedback').textContent='';
   document.getElementById('quizFeedback').className='feedback';
-  const opts = document.getElementById('quizOptions');
+  const opts=document.getElementById('quizOptions');
   opts.innerHTML='';
   [...f.options].sort(()=>Math.random()-0.5).forEach(opt=>{
     const btn=document.createElement('button');
@@ -294,8 +329,7 @@ function renderFlag() {
     opts.appendChild(btn);
   });
 }
-
-function selectOption(opt,btn) {
+function selectOption(opt,btn){
   const f=flags[currentFlag];
   document.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
   const fb=document.getElementById('quizFeedback');
@@ -315,16 +349,15 @@ function selectOption(opt,btn) {
 }
 
 // ── STOP THE UHAUL ────────────────────────────────────────────────
-const QUESTIONS = [
+const QUESTIONS=[
   { q:'🧮 Quick maths. What is 8 × 6?', answers:['48'], right:'✅ 48! The truck brakes a little... 🛑', wrong:'❌ WRONG. The truck is speeding up. THINK.' },
   { q:"👨 What's the name of Julie's dad?", answers:['manuel'], right:'✅ Manuel! It\'s slowing down... 🛑🛑', wrong:'❌ Nope! The truck does not care about your wrong answers.' },
   { q:'🇵🇹 Does Julie speak Portuguese? (yes/no)', answers:['yes','oui','sim'], right:'✅ YES obviously! FULL STOP. You saved us. 🛑🛑🛑', wrong:'❌ The answer is YES. Obviously. Now the truck is basically on your face.' }
 ];
+let uhaulInterval,uhaulTimeLeft,currentQ,uhaulRunning;
+const TOTAL_TIME=20;
 
-let uhaulInterval, uhaulTimeLeft, currentQ, uhaulRunning;
-const TOTAL_TIME = 20;
-
-function initUhaul() {
+function initUhaul(){
   clearInterval(uhaulInterval);
   currentQ=0; uhaulRunning=true; uhaulTimeLeft=TOTAL_TIME;
   const truck=document.getElementById('uhaul-truck');
@@ -337,8 +370,7 @@ function initUhaul() {
   renderUhaulQ();
   uhaulInterval=setInterval(tickUhaul,100);
 }
-
-function tickUhaul() {
+function tickUhaul(){
   uhaulTimeLeft=Math.max(0,uhaulTimeLeft-0.1);
   const pct=(uhaulTimeLeft/TOTAL_TIME)*100;
   document.getElementById('uhaulTimerFill').style.width=pct+'%';
@@ -347,16 +379,14 @@ function tickUhaul() {
   document.getElementById('uhaul-truck').style.width=(2.5+progress*18)+'rem';
   if(uhaulTimeLeft<=0) crashUhaul();
 }
-
-function renderUhaulQ() {
+function renderUhaulQ(){
   document.getElementById('uhaulQText').textContent=QUESTIONS[currentQ].q;
   document.getElementById('uhaulInput').value='';
   document.getElementById('uhaulInput').disabled=false;
   document.getElementById('uhaulInput').focus();
   document.getElementById('uhaulFeedback').textContent='';
 }
-
-function submitUhaul() {
+function submitUhaul(){
   if(!uhaulRunning) return;
   const raw=document.getElementById('uhaulInput').value.trim().toLowerCase();
   if(!raw) return;
@@ -383,8 +413,7 @@ function submitUhaul() {
     if(uhaulTimeLeft<=0) crashUhaul();
   }
 }
-
-function crashUhaul() {
+function crashUhaul(){
   if(!uhaulRunning) return;
   uhaulRunning=false; clearInterval(uhaulInterval);
   document.getElementById('uhaul-truck').style.width='100%';
@@ -393,11 +422,8 @@ function crashUhaul() {
   document.getElementById('uhaulCountdown').textContent='💥';
   setTimeout(()=>document.getElementById('uhaulRetry').style.display='block',700);
 }
-
 document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){
-    if(document.getElementById('screen-2').classList.contains('active')&&uhaulRunning) submitUhaul();
-  }
+  if(e.key==='Enter' && document.getElementById('screen-2').classList.contains('active') && uhaulRunning) submitUhaul();
 });
 
 // ── METRO GAME ────────────────────────────────────────────────────
@@ -407,17 +433,17 @@ const ITEMS=[
   {src:'./your_face.png',isMetro:false},
   {src:'./jolly_roger.png',isMetro:false},
   {src:'./uhaul.png',isMetro:false},
-  {src:'./choco.png',isMetro:false},
-  {src:'./cubbyhole.png',isMetro:false},
-  {src:'./your_face.png',isMetro:false},
-  {src:'./jolly_roger.png',isMetro:false},
-  {src:'./uhaul.png',isMetro:false},
-  {src:'./choco.png',isMetro:false},
-  {src:'./cubbyhole.png',isMetro:false},
-  {src:'./your_face.png',isMetro:false},
-  {src:'./jolly_roger.png',isMetro:false},
-  {src:'./uhaul.png',isMetro:false},
   {src:'./metro_card.png',isMetro:true},
+  {src:'./choco.png',isMetro:false},
+  {src:'./cubbyhole.png',isMetro:false},
+  {src:'./your_face.png',isMetro:false},
+  {src:'./jolly_roger.png',isMetro:false},
+  {src:'./uhaul.png',isMetro:false},
+  {src:'./choco.png',isMetro:false},
+  {src:'./cubbyhole.png',isMetro:false},
+  {src:'./your_face.png',isMetro:false},
+  {src:'./jolly_roger.png',isMetro:false},
+  {src:'./uhaul.png',isMetro:false},
 ];
 let score=0,gameIntervals=[],gameRunning=false;
 
@@ -433,7 +459,6 @@ function initGame(){
   });
   scheduleMetro(arena);
 }
-
 function makeItem(item){
   const el=document.createElement('img');
   el.src=item.src; el.className='flying-item'; el.draggable=false;
@@ -444,7 +469,6 @@ function makeItem(item){
   else { el.onclick=()=>missClick(); }
   return el;
 }
-
 function floatItem(el,arena){
   let x=parseFloat(el.style.left),y=parseFloat(el.style.top);
   let vx=(Math.random()-0.5)*0.38,vy=(Math.random()-0.5)*0.38;
@@ -456,7 +480,6 @@ function floatItem(el,arena){
   },30);
   gameIntervals.push(id);
 }
-
 function scheduleMetro(arena){
   if(!gameRunning) return;
   setTimeout(()=>{
@@ -465,7 +488,6 @@ function scheduleMetro(arena){
     setTimeout(()=>{ if(metro.parentNode) metro.remove(); scheduleMetro(arena); },500+Math.random()*500);
   },800+Math.random()*1200);
 }
-
 function catchMetro(el){
   if(!gameRunning) return;
   el.remove(); score++;
@@ -480,11 +502,10 @@ function catchMetro(el){
     setTimeout(()=>goToScreen(4),700);
   }
 }
-
 function missClick(){
   const flash=document.getElementById('missFlash');
   flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',300);
-  const bads=["❌ Wrong item, bestie.","❌ Are you even trying?","❌ NOT THE CHOCOLATE.","❌ That's Julie's face, not a metro card."];
+  const bads=["❌ That's not a metro card.","❌ Wrong item, bestie.","❌ Are you even trying?","❌ NOT THE CHOCOLATE.","❌ That's Julie's face, not a metro card."];
   const fb=document.getElementById('gameFeedback');
   fb.textContent=bads[Math.floor(Math.random()*bads.length)]; fb.className='feedback bad';
   setTimeout(()=>fb.textContent='',700);
@@ -492,7 +513,7 @@ function missClick(){
 
 // ── CONFETTI ──────────────────────────────────────────────────────
 function launchConfetti(){
-  const colors=['#f4a916','#e63946','#ffffff','#ffd700','#ff6b6b','#ffeaa7'];
+  const colors=['#f26522','#3a6b35','#ffffff','#ffb347','#f5f0e8','#c44d0f'];
   const container=document.getElementById('screen-4');
   for(let i=0;i<80;i++){
     setTimeout(()=>{
