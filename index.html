@@ -407,6 +407,16 @@ const ITEMS=[
   {src:'./your_face.png',isMetro:false},
   {src:'./jolly_roger.png',isMetro:false},
   {src:'./uhaul.png',isMetro:false},
+  {src:'./choco.png',isMetro:false},
+  {src:'./cubbyhole.png',isMetro:false},
+  {src:'./your_face.png',isMetro:false},
+  {src:'./jolly_roger.png',isMetro:false},
+  {src:'./uhaul.png',isMetro:false},
+  {src:'./choco.png',isMetro:false},
+  {src:'./cubbyhole.png',isMetro:false},
+  {src:'./your_face.png',isMetro:false},
+  {src:'./jolly_roger.png',isMetro:false},
+  {src:'./uhaul.png',isMetro:false},
   {src:'./metro_card.png',isMetro:true},
 ];
 let score=0,gameIntervals=[],gameRunning=false;
@@ -452,7 +462,7 @@ function scheduleMetro(arena){
   setTimeout(()=>{
     if(!gameRunning) return;
     const metro=makeItem(ITEMS[5]); arena.appendChild(metro); floatItem(metro,arena);
-    setTimeout(()=>{ if(metro.parentNode) metro.remove(); scheduleMetro(arena); },1000+Math.random()*500);
+    setTimeout(()=>{ if(metro.parentNode) metro.remove(); scheduleMetro(arena); },500+Math.random()*500);
   },800+Math.random()*1200);
 }
 
@@ -474,7 +484,7 @@ function catchMetro(el){
 function missClick(){
   const flash=document.getElementById('missFlash');
   flash.style.opacity='1'; setTimeout(()=>flash.style.opacity='0',300);
-  const bads=["❌ That's not a metro card.","❌ Wrong item, bestie.","❌ Are you even trying?","❌ NOT THE CHOCOLATE.","❌ That's Julie's face, not a metro card."];
+  const bads=["❌ Wrong item, bestie.","❌ Are you even trying?","❌ NOT THE CHOCOLATE.","❌ That's Julie's face, not a metro card."];
   const fb=document.getElementById('gameFeedback');
   fb.textContent=bads[Math.floor(Math.random()*bads.length)]; fb.className='feedback bad';
   setTimeout(()=>fb.textContent='',700);
